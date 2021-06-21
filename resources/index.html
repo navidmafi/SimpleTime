@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Cache-control" content="no-cache" />
+    <title>StopWatch - Chrono</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body onload="updater()" oncontextmenu="return false;">
+    <div id="oc" class="ocean">
+      <svg viewbox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path
+            id="sineWave"
+            fill="var(--GBlack)"
+            fill-opacity="0.5"
+            d="M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V0 H0"
+          />
+        </defs>
+        <use class="wave" href="#sineWave" />
+        <use class="wave" x="-100%" href="#sineWave" />
+        <use class="wave1" href="#sineWave" />
+        <use class="wave1" x="-100%" href="#sineWave" />
+        <use class="wave2" href="#sineWave" />
+        <use class="wave2" x="-100%" href="#sineWave" />
+      </svg>
+    </div>
+
+    <div id="bigprint" class="startsc" style="display: none">
+      <h2 id="starttext" class="updatetext">statusmsg</h2>
+    </div>
+
+    <div id="mainsc" class="main">
+      <span id="display">0:00:00:00</span>
+      <div class="btns1">
+        <button id="playpauseButton" class="btn2 width20">Start</button>
+        <button id="stopButton" class="btn2 width20">Stop</button>
+        <button id="resetButton" class="btn2 width20">Reset</button>
+
+      </div>
+
+      <button id="OptionBtn" class="min">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="4vw"
+          height="4vw"
+          fill="currentColor"
+          class="bi bi-three-dots"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+          />
+        </svg>
+      </button> 
+      
+    </div>
+
+    <div id="setsc" class="settings">
+      <h1>Settings</h1>
+      <div class="btns1">
+        <button id="mstoggle" class="btn2 width30">Toggle ms</button>
+        <button class="btn2 width30" disabled>Timer</button>
+        <button id="efftgl" class="btn2 width30">Toggle Effect</button>
+      </div>
+    </div>
+
+    <button
+      id="backbtn"
+      class="min"
+      onclick="mainscreenshow()"
+      style="display: none"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="4vw"
+        height="4vw"
+        fill="currentColor"
+        class="bi bi-three-dots"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+        />
+      </svg>
+    </button>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/neutralino.js"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "applicationId": "com.MeiAihara.TimeTool",
+  "port": 0,
+  "defaultMode": "window",
+  "enableHTTPServer": true,
+  "enableNativeAPI": true,
+  "url": "/resources/",
+  "nativeBlockList": [],
+  "modes": {
+    "window": {
+      "title": "SimpleTime-Build210622-0039",
+      "width": 400,
+      "height": 110,
+      "minWidth": 400,
+      "minHeight": 150,
+      "fullScreen": false,
+      "alwaysOnTop": true,
+      "icon": "/resources/icons/appIcon.png",
+      "enableInspector": true,
+      "borderless": false,
+      "maximize": false
+    },
+    "browser": {},
+    "cloud": {}
+  },
+  "cli": {
+    "binaryName": "SimpleTime",
+    "resourcesPath": "/resources/",
+    "clientLibrary": "/resources/js/neutralino.js",
+    "binaryVersion": "2.3.0"
+  }
+}

@@ -37,3 +37,4 @@ to [@SinisterStalker](https://github.com/sinisterstalker) and [@Al1382](https://
 ## License and Copyright
 - Neutralinojs core: MIT. Copyright © 2021 Neutralinojs and contributors.
 - SimpleTime :  GNU GPLv3. Copyright © 2021 Navid Mafi Ranji and contributors.
+- DSEG Font Family : OFL-1.1. Copyright © 2021 DSEG Font Family and contributors.
