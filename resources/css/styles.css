@@ -50,6 +50,19 @@
   .settings h1 {
     font-size: 6vw;
   }
+
+
+  .settimer {
+    display: none;
+    align-items: center;
+    text-align: center;
+  
+    height: 100vh;
+  }
+  .settimer h1 {
+    font-size: 6vw;
+  }
+  
   .startsc {
     position: absolute;
     z-index: 5;
@@ -151,6 +164,14 @@
     color: var(--GLight);
   }
   
+
+.form1 * {
+  margin: 5px;
+}
+.form1 input {
+  text-align: center;
+}
+
   .ocean {
     overflow: hidden;
     width: 100%;

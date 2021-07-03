@@ -1,20 +1,24 @@
-# SimpleTime
+## SimpleTime
 A simple cross-platform timer and stopwatch app with modern design in mind. Using Neutralino JS. heavily in development, bugs are expected.
-## Note:
-Check Known Bugs before opening new ones, this project is in development.
+
 ## Available for
 - Windows 
 
+**Note : You need to have WebView2 or Latest Microsoft Edge Installed for app to function correctly, check "Apps and features" in Windows settings. If you don't have it installed, download it from [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).**
+
 **Note: if you are getting a white screen after opening app, run this command as admin**
 
-`CheckNetIsolation.exe LoopbackExempt -a -n="Microsoft.Win32WebViewHost_cw5n1h2txyewy"`
+```CheckNetIsolation.exe LoopbackExempt -a -n="Microsoft.Win32WebViewHost_cw5n1h2txyewy"```
 > The reason is that accessing localhost from a UWP context is disabled by default. Run the following command with administrative privileges on the command prompt. 
 
-Unfortunately it is a problem with Neutralino JS. but I think it should be ok if Windows is using WebView2
+Unfortunately it is a problem with Neutralino JS.
 
 - Linux
 
 - Mac
+
+## Note:
+Check Known Bugs before opening new ones, this project is in development.
 
 ## Build
 ```bash
@@ -38,3 +42,4 @@ to [@SinisterStalker](https://github.com/sinisterstalker) and [@Al1382](https://
 - Neutralinojs core: MIT. Copyright © 2021 Neutralinojs and contributors.
 - SimpleTime :  GNU GPLv3. Copyright © 2021 Navid Mafi Ranji and contributors.
 - DSEG Font Family : OFL-1.1. Copyright © 2021 DSEG Font Family and contributors.
+- Sound Effects By [Zapsplat](https://www.zapsplat.com) , [License](https://www.zapsplat.com/license-type/standard-license/).

@@ -66,9 +66,22 @@
       <h1>Settings</h1>
       <div class="btns1">
         <button id="mstoggle" class="btn2 width30">Toggle ms</button>
-        <button class="btn2 width30" disabled>Timer</button>
+        <button id="timerbtn" class="btn2 width30">Timer</button>
         <button id="efftgl" class="btn2 width30">Toggle Effect</button>
       </div>
+    </div>
+
+    <div id="timerscreen" class="settimer">
+      
+      <form class="form1" onsubmit="getformdata()" action="javascript:void(0);">
+        <p>Enter Time in minutes</p>
+        <div class="btns1">
+          <input type="text" id="timermin" placeholder="here" class="btn2 width30">
+          <button type="submit" class="btn2 width30">Set</button>
+        </div>
+       
+      </form>
+     
     </div>
 
     <button
@@ -94,5 +107,10 @@
 
     <script src="./js/main.js"></script>
     <script src="./js/neutralino.js"></script>
+
+
+<audio id="timeended">
+    <source src="./audio/alert1.mp3" type="audio/mp3">
+</audio>
   </body>
 </html>

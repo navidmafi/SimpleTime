@@ -8,23 +8,28 @@ let SttBtn = document.getElementById("OptionBtn");
 let backbtn = document.getElementById("backbtn");
 let mainscreen = document.getElementById("mainsc");
 let setscreen = document.getElementById("setsc");
+let timerscreen = document.getElementById("timerscreen");
 let mstoggle = document.getElementById("mstoggle");
 let starttext = document.getElementById("starttext");
+let timerbtn = document.getElementById("timerbtn");
+let display = document.getElementById("display");
 let efftgl = document.getElementById("efftgl");
 let oc = document.getElementById("oc");
+let timerinputelmnt = document.getElementById("timermin");
+let timerval;
 let PREFDATA;
 let MODE;
 let runninstatus;
 
 function updater() {
-  runninstatus = false;
+  runninstatus = "off";
   MODE = "CHRONO";
   document.addEventListener("contextmenu", (event) => event.preventDefault());
   printbig("Starting...", 2000);
   checkfirstrun();
   setTimeout(() => {
     if (PREFDATA.showms == false) {
-      document.getElementById("display").innerText = "0:00:00";
+      display.innerText = "0:00:00";
     }
     if (PREFDATA.useeff == false) {
       oc.firstElementChild.style.display="none";
@@ -34,6 +39,7 @@ function updater() {
   RstBtn.addEventListener("click", reset);
   StpBtn.addEventListener("click",stop)
   SttBtn.addEventListener("click", showsettings)
+  timerbtn.addEventListener("click",settimer)
   document.addEventListener("keydown", function (event) {
     if (event.code === "Space") {
       togglerunnin();
@@ -109,11 +115,14 @@ function timeToString(time) {
 }
 
 function print(txt) {
-  document.getElementById("display").innerHTML = txt;
+  display.innerHTML = txt;
 }
 
 function start() {
-  runninstatus = true;
+  if (runninstatus != "timerpaused") {
+    runninstatus = "crn";
+  }
+ 
   document.getElementById("oc").style.opacity = "1";
   PPbtn.innerText="Pause";
   var x;
@@ -124,23 +133,49 @@ function start() {
   if (PREFDATA.showms == true){
     x=10;
   }
-  startTime = Date.now() - elapsedTime;
-  timerInterval = setInterval(function printTime() {
-    elapsedTime = Date.now() - startTime;
-    print(timeToString(elapsedTime));
-  }, x);
+
+  if (runninstatus=="timerpaused") {
+    runninstatus = "timerrunning";
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function printTime() {
+      elapsedTime = Date.now() - startTime;
+      print(timeToString(timerval-elapsedTime));
+    }, x);
+  }
+  if (runninstatus=="crn") {
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function printTime() {
+      elapsedTime = Date.now() - startTime;
+      print(timeToString(elapsedTime));
+    }, x);
+  }
+
 }
 
 function pause() {
-  runninstatus = false;
+  if (runninstatus=="crn") {
+    runninstatus="crnpaused"
+  }
+  if (runninstatus=="timerrunning") {
+    runninstatus="timerpaused"
+  }
   document.getElementById("oc").style.opacity = "0.5";
   clearInterval(timerInterval);
+  
   PPbtn.innerText="Resume";
 }
 
-
+function c(d){
+  console.log(d);
+  //dEbUG XD
+}
 
 function showsettings() {
+  if (runninstatus == "crn") {
+    pause();
+    runninstatus == "insettings";
+  }
+  
   mainscreen.style.display = "none";
   backbtn.removeAttribute("style");
   setscreen.style.display = "grid";
@@ -149,16 +184,24 @@ function showsettings() {
 async function mainscreenshow() {
   await getprefs();
   setscreen.style.display = "none";
+  timerscreen.style.display="none";
   backbtn.style.display = "none";
   mainscreen.style.display = "grid";
-  print(timeToString(elapsedTime));
-  console.log(PREFDATA.useeff);
+  if (runninstatus=="timerpaused") {
+    print(timeToString(timerval));
+  }
+  if (runninstatus=="crn") {
+    print(timeToString(elapsedTime));
+  }
+  
+
   if (PREFDATA.useeff == false) {
     oc.firstElementChild.style.display="none";
   }
   if (PREFDATA.useeff == true) {
     oc.firstElementChild.removeAttribute("style");
   }
+
 }
 
 function printbig(text, time) {
@@ -172,8 +215,11 @@ function printbig(text, time) {
 function reset() {
   clearInterval(timerInterval);
   print("reset");
+  document.getElementById("timeended").pause();
+  document.getElementById("timeended").currentTime = 0;
+  display.removeAttribute("style");
   elapsedTime = 0;
-  runninstatus= false;
+  runninstatus= "off";
   setTimeout(() => {
     print(timeToString(elapsedTime));
     RstBtn.removeAttribute("style");
@@ -183,14 +229,40 @@ function reset() {
   }, 80);
 }
 
+function settimer() {
+    mainscreen.style.display="none";
+    setscreen.style.display="none";
+    timerscreen.style.display="grid";
+}
+
 function togglerunnin() {
-  if (runninstatus == true) {
-    pause();
-  } else {
+
+  if (runninstatus == "timerpaused" || runninstatus == "crnpaused" || runninstatus == "off") {
     start();
+  }
+  else {
+    pause();
   }
 }
 
+function getformdata() {
+  timerval= timerinputelmnt.value*1000*60;
+runninstatus="timerpaused";
+c(timerval);
+print(timeToString(timerval));
+clearInterval(timerInterval);
+mainscreenshow();
+}
+
+function timeEnded() {
+  stop();
+  document.getElementById("timeended").loop = true; 
+  display.style.color = "#fc2149";
+  display.innerText = "END";
+  display.style.textShadow = "none";
+  document.getElementById("timeended").play();
+
+}
 
 function stop() {
   pause();
