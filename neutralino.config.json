@@ -8,14 +8,14 @@
   "nativeBlockList": [],
   "modes": {
     "window": {
-      "title": "SimpleTime-Build210630",
+      "title": "SimpleTime",
       "width": 400,
       "height": 110,
       "minWidth": 400,
       "minHeight": 150,
       "fullScreen": false,
       "alwaysOnTop": true,
-      "icon": "/resources/icons/appIcon.png",
+      "icon": "/resources/icons/clock.png",
       "enableInspector": true,
       "borderless": false,
       "maximize": false

@@ -1,6 +1,7 @@
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
+let zerocheckInterval;
 let PPbtn = document.getElementById("playpauseButton");
 let RstBtn = document.getElementById("resetButton");
 let StpBtn = document.getElementById("stopButton");
@@ -20,34 +21,37 @@ let timerval;
 let PREFDATA;
 let MODE;
 let runninstatus;
-
-function updater() {
+let updateinterval;
+async function updater() {
   runninstatus = "off";
   MODE = "CHRONO";
   document.addEventListener("contextmenu", (event) => event.preventDefault());
-  printbig("Starting...", 2000);
-  checkfirstrun();
-  setTimeout(() => {
-    if (PREFDATA.showms == false) {
-      display.innerText = "0:00:00";
-    }
-    if (PREFDATA.useeff == false) {
-      oc.firstElementChild.style.display="none";
-    }
-  }, 500);
+  printbig("Starting...", 1000);
+  await checkfirstrun();
+  await getprefs();
+  if (PREFDATA.showms == false) {
+    display.innerText = "0:00:00";
+  }
+  if (PREFDATA.useeff == false) {
+    oc.firstElementChild.style.display = "none";
+  }
   PPbtn.addEventListener("click", togglerunnin);
   RstBtn.addEventListener("click", reset);
-  StpBtn.addEventListener("click",stop)
-  SttBtn.addEventListener("click", showsettings)
-  timerbtn.addEventListener("click",settimer)
+  StpBtn.addEventListener("click", stop);
+  SttBtn.addEventListener("click", showsettings);
+  timerbtn.addEventListener("click", settimer);
   document.addEventListener("keydown", function (event) {
     if (event.code === "Space") {
       togglerunnin();
     }
   });
-  getprefs();
+  if (PREFDATA.showms == false) {
+    updateinterval = 100;
+  }
+  if (PREFDATA.showms == true) {
+    updateinterval = 10;
+  }
 }
-
 
 async function readdata() {
   let response = await Neutralino.storage.getData({
@@ -60,7 +64,6 @@ async function getprefs() {
   PREFDATA = await readdata();
 }
 
-
 async function firstdetected() {
   await Neutralino.filesystem.createDirectory({
     path: "./.storage",
@@ -69,7 +72,7 @@ async function firstdetected() {
     fileName: "./.storage/prefs.neustorage",
     data: '{"showms":true , "useeff":true}',
   });
-  printbig("GenConfig..",500)
+  printbig("GenConfig..", 500);
   setTimeout(() => {
     window.location.reload();
   }, 500);
@@ -103,15 +106,13 @@ function timeToString(time) {
   let formattedMM = mm.toString().padStart(2, "0");
   let formattedSS = ss.toString().padStart(2, "0");
   let formattedMS = ms.toString().padStart(2, "0");
+
   if (PREFDATA.showms == true) {
     return `${formattedHH}:${formattedMM}:${formattedSS}:${formattedMS}`;
   }
   if (PREFDATA.showms == false) {
     return `${formattedHH}:${formattedMM}:${formattedSS}`;
-  }
-  else {
-    return `err`;
-  }
+  } 
 }
 
 function print(txt) {
@@ -119,63 +120,56 @@ function print(txt) {
 }
 
 function start() {
-  if (runninstatus != "timerpaused") {
-    runninstatus = "crn";
-  }
- 
-  document.getElementById("oc").style.opacity = "1";
-  PPbtn.innerText="Pause";
-  var x;
-  if (PREFDATA.showms == false){
-    console.log("runin in 1s mode");
-    x=1000;
-  }
-  if (PREFDATA.showms == true){
-    x=10;
-  }
-
-  if (runninstatus=="timerpaused") {
-    runninstatus = "timerrunning";
-    startTime = Date.now() - elapsedTime;
+  startTime = Date.now() - elapsedTime;
+  if (runninstatus == "timerpaused") {
     timerInterval = setInterval(function printTime() {
       elapsedTime = Date.now() - startTime;
       print(timeToString(timerval-elapsedTime));
-    }, x);
+    }, updateinterval);
+    runninstatus = "timerrunning";
   }
-  if (runninstatus=="crn") {
-    startTime = Date.now() - elapsedTime;
+  else {
     timerInterval = setInterval(function printTime() {
       elapsedTime = Date.now() - startTime;
       print(timeToString(elapsedTime));
-    }, x);
-  }
+    }, updateinterval);
+    runninstatus = "crn";
 
+  }
+  document.getElementById("oc").style.opacity = "1";
+  PPbtn.innerText = "Pause";
+  zerocheckInterval = setInterval(function checkforzero() {
+    if (timerval-1000 <= elapsedTime) {
+      timeEnded();
+    }
+  }, 1000);
 }
 
 function pause() {
-  if (runninstatus=="crn") {
-    runninstatus="crnpaused"
+  if (runninstatus == "crn") {
+    runninstatus = "crnpaused";
   }
-  if (runninstatus=="timerrunning") {
-    runninstatus="timerpaused"
+  if (runninstatus == "timerrunning") {
+    runninstatus = "timerpaused";
   }
-  document.getElementById("oc").style.opacity = "0.5";
+  if (PREFDATA.useeff == false) {
+    oc.firstElementChild.style.display = "none";
+  }
+  if (PREFDATA.useeff == true) {
+    document.getElementById("oc").style.opacity = "0.5";
+  }
   clearInterval(timerInterval);
-  
-  PPbtn.innerText="Resume";
+  clearInterval(zerocheckInterval);
+  PPbtn.innerText = "Resume";
 }
 
-function c(d){
+function c(d) {
   console.log(d);
   //dEbUG XD
 }
 
 function showsettings() {
-  if (runninstatus == "crn") {
-    pause();
-    runninstatus == "insettings";
-  }
-  
+  pause();
   mainscreen.style.display = "none";
   backbtn.removeAttribute("style");
   setscreen.style.display = "grid";
@@ -184,24 +178,22 @@ function showsettings() {
 async function mainscreenshow() {
   await getprefs();
   setscreen.style.display = "none";
-  timerscreen.style.display="none";
+  timerscreen.style.display = "none";
   backbtn.style.display = "none";
   mainscreen.style.display = "grid";
-  if (runninstatus=="timerpaused") {
-    print(timeToString(timerval));
+  if (runninstatus == "timerpaused") {
+    print(timeToString(timerval-elapsedTime));
   }
-  if (runninstatus=="crn") {
+  if (runninstatus == "crn") {
     print(timeToString(elapsedTime));
   }
-  
 
   if (PREFDATA.useeff == false) {
-    oc.firstElementChild.style.display="none";
+    oc.firstElementChild.style.display = "none";
   }
   if (PREFDATA.useeff == true) {
     oc.firstElementChild.removeAttribute("style");
   }
-
 }
 
 function printbig(text, time) {
@@ -219,49 +211,52 @@ function reset() {
   document.getElementById("timeended").currentTime = 0;
   display.removeAttribute("style");
   elapsedTime = 0;
-  runninstatus= "off";
+  runninstatus = "off";
   setTimeout(() => {
     print(timeToString(elapsedTime));
     RstBtn.removeAttribute("style");
     PPbtn.removeAttribute("style");
-    PPbtn.innerText="Start";
+    PPbtn.innerText = "Start";
     StpBtn.removeAttribute("style");
   }, 80);
 }
 
 function settimer() {
-    mainscreen.style.display="none";
-    setscreen.style.display="none";
-    timerscreen.style.display="grid";
+  mainscreen.style.display = "none";
+  setscreen.style.display = "none";
+  timerscreen.style.display = "grid";
 }
 
 function togglerunnin() {
-
-  if (runninstatus == "timerpaused" || runninstatus == "crnpaused" || runninstatus == "off") {
+  if (
+    runninstatus == "timerpaused" ||
+    runninstatus == "crnpaused" ||
+    runninstatus == "off"
+  ) {
     start();
-  }
-  else {
+  } else {
     pause();
   }
 }
 
 function getformdata() {
-  timerval= timerinputelmnt.value*1000*60;
-runninstatus="timerpaused";
-c(timerval);
-print(timeToString(timerval));
-clearInterval(timerInterval);
-mainscreenshow();
+  reset();
+  setTimeout(() => {
+    timerval = timerinputelmnt.value * 1000 * 60;
+  runninstatus = "timerpaused";
+  c(timerval);
+  print(timeToString(timerval));
+  mainscreenshow();
+  }, 100);
 }
 
 function timeEnded() {
   stop();
-  document.getElementById("timeended").loop = true; 
+  document.getElementById("timeended").loop = true;
   display.style.color = "#fc2149";
   display.innerText = "END";
   display.style.textShadow = "none";
   document.getElementById("timeended").play();
-
 }
 
 function stop() {
@@ -271,7 +266,7 @@ function stop() {
   RstBtn.style.width = "50%";
   PPbtn.style.display = "none";
   StpBtn.style.display = "none";
-};
+}
 
 efftgl.onclick = async function () {
   console.log("hello");
@@ -317,9 +312,8 @@ mstoggle.onclick = async function () {
     printbig("Applying", 600);
     setTimeout(() => {
       getprefs();
+    updateinterval = 10;
     }, 500);
-
-
   }
   if (PREFDATA.showms == true) {
     await Neutralino.storage.putData({
@@ -332,6 +326,8 @@ mstoggle.onclick = async function () {
     printbig("Applying", 600);
     setTimeout(() => {
       getprefs();
+    updateinterval = 1000;
+
     }, 500);
   }
 };
