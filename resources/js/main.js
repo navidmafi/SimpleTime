@@ -1,3 +1,8 @@
+/* Copyright (c) 2021 Navid Mafi <navidmafi2006@gmail.com>
+ Licensed under the GPLv3 Licence.
+See the LICENCE file in the repository root for full licence text.
+*/
+
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
@@ -14,8 +19,6 @@ let mstoggle = document.getElementById("mstoggle");
 let starttext = document.getElementById("starttext");
 let timerbtn = document.getElementById("timerbtn");
 let display = document.getElementById("display");
-let efftgl = document.getElementById("efftgl");
-let oc = document.getElementById("oc");
 let timerinputelmnt = document.getElementById("timermin");
 let timerval;
 let PREFDATA;
@@ -23,7 +26,7 @@ let MODE;
 let runninstatus;
 let updateinterval;
 async function updater() {
-  runninstatus = "off";
+  runninstatus = "READY";
   MODE = "CHRONO";
   document.addEventListener("contextmenu", (event) => event.preventDefault());
   printbig("Starting...", 1000);
@@ -32,9 +35,7 @@ async function updater() {
   if (PREFDATA.showms == false) {
     display.innerText = "0:00:00";
   }
-  if (PREFDATA.useeff == false) {
-    oc.firstElementChild.style.display = "none";
-  }
+
   PPbtn.addEventListener("click", togglerunnin);
   RstBtn.addEventListener("click", reset);
   StpBtn.addEventListener("click", stop);
@@ -70,7 +71,7 @@ async function firstdetected() {
   });
   await Neutralino.filesystem.writeFile({
     fileName: "./.storage/prefs.neustorage",
-    data: '{"showms":true , "useeff":true}',
+    data: '{"showms":true}',
   });
   printbig("GenConfig..", 500);
   setTimeout(() => {
@@ -85,11 +86,9 @@ async function checkfirstrun() {
     });
     var res = response.data;
   } catch (error) {
-    if (error.includes("Unable to open ./.storage/prefs.neustorage")) {
-      console.log(error);
-      console.log("firstrun");
+
       firstdetected();
-    }
+  
   }
 }
 
@@ -136,7 +135,7 @@ function start() {
     runninstatus = "crn";
 
   }
-  document.getElementById("oc").style.opacity = "1";
+
   PPbtn.innerText = "Pause";
   zerocheckInterval = setInterval(function checkforzero() {
     if (timerval-1000 <= elapsedTime) {
@@ -152,15 +151,12 @@ function pause() {
   if (runninstatus == "timerrunning") {
     runninstatus = "timerpaused";
   }
-  if (PREFDATA.useeff == false) {
-    oc.firstElementChild.style.display = "none";
-  }
-  if (PREFDATA.useeff == true) {
-    document.getElementById("oc").style.opacity = "0.5";
-  }
   clearInterval(timerInterval);
   clearInterval(zerocheckInterval);
+  if (runninstatus != "READY") {
   PPbtn.innerText = "Resume";
+    
+  }
 }
 
 function c(d) {
@@ -183,17 +179,12 @@ async function mainscreenshow() {
   mainscreen.style.display = "grid";
   if (runninstatus == "timerpaused") {
     print(timeToString(timerval-elapsedTime));
+    
   }
   if (runninstatus == "crn") {
     print(timeToString(elapsedTime));
   }
 
-  if (PREFDATA.useeff == false) {
-    oc.firstElementChild.style.display = "none";
-  }
-  if (PREFDATA.useeff == true) {
-    oc.firstElementChild.removeAttribute("style");
-  }
 }
 
 function printbig(text, time) {
@@ -231,7 +222,8 @@ function togglerunnin() {
   if (
     runninstatus == "timerpaused" ||
     runninstatus == "crnpaused" ||
-    runninstatus == "off"
+    runninstatus == "off" ||
+    runninstatus == "READY"
   ) {
     start();
   } else {
@@ -261,43 +253,13 @@ function timeEnded() {
 
 function stop() {
   pause();
-  document.getElementById("oc").style.opacity = "0";
   RstBtn.style.transitionDuration = "300ms";
   RstBtn.style.width = "50%";
   PPbtn.style.display = "none";
   StpBtn.style.display = "none";
 }
 
-efftgl.onclick = async function () {
-  console.log("hello");
-  await getprefs();
-  if (PREFDATA.useeff == false) {
-    await Neutralino.storage.putData({
-      bucket: "prefs",
-      data: JSON.stringify({
-        showms: PREFDATA.showms,
-        useeff: true,
-      }),
-    });
-    printbig("Applying", 500);
-    setTimeout(() => {
-      getprefs();
-    }, 300);
-  }
-  if (PREFDATA.useeff == true) {
-    await Neutralino.storage.putData({
-      bucket: "prefs",
-      data: JSON.stringify({
-        showms: PREFDATA.showms,
-        useeff: false,
-      }),
-    });
-    printbig("Applying", 500);
-    setTimeout(() => {
-      getprefs();
-    }, 300);
-  }
-};
+
 
 mstoggle.onclick = async function () {
   await getprefs();
@@ -305,8 +267,7 @@ mstoggle.onclick = async function () {
     await Neutralino.storage.putData({
       bucket: "prefs",
       data: JSON.stringify({
-        showms: true,
-        useeff: PREFDATA.useeff,
+        showms: true
       }),
     });
     printbig("Applying", 600);
@@ -319,8 +280,7 @@ mstoggle.onclick = async function () {
     await Neutralino.storage.putData({
       bucket: "prefs",
       data: JSON.stringify({
-        showms: false,
-        useeff: PREFDATA.useeff,
+        showms: false
       }),
     });
     printbig("Applying", 600);

@@ -13,24 +13,6 @@
     />
   </head>
   <body onload="updater()" oncontextmenu="return false;">
-    <div id="oc" class="ocean">
-      <svg viewbox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <path
-            id="sineWave"
-            fill="var(--GBlack)"
-            fill-opacity="0.5"
-            d="M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V0 H0"
-          />
-        </defs>
-        <use class="wave" href="#sineWave" />
-        <use class="wave" x="-100%" href="#sineWave" />
-        <use class="wave1" href="#sineWave" />
-        <use class="wave1" x="-100%" href="#sineWave" />
-        <use class="wave2" href="#sineWave" />
-        <use class="wave2" x="-100%" href="#sineWave" />
-      </svg>
-    </div>
 
     <div id="bigprint" class="startsc" style="display: none">
       <h2 id="starttext" class="updatetext">statusmsg</h2>
@@ -67,7 +49,6 @@
       <div class="btns1">
         <button id="mstoggle" class="btn2 width30">Toggle ms</button>
         <button id="timerbtn" class="btn2 width30">Timer</button>
-        <button id="efftgl" class="btn2 width30">Toggle Effect</button>
       </div>
     </div>
 

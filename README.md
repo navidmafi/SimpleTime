@@ -1,29 +1,28 @@
 ## SimpleTime
-**Mainstream support for this project ended on 6 July 2021. I don't have any plans to continue to work on this. only bug fixes until end of life. However SimpleTime has been and always will be open to contributions!**
+**Mainstream support for this project ended on 6 July 2021. I don't have any plans to continue to work on this. only bug fixes and performance changes until end of life. However SimpleTime has been and always will be open to contributions!**
 
-A simple cross-platform timer and stopwatch app with modern design in mind. Using Neutralino JS. heavily in development, bugs are expected.
+A simple cross-platform timer and stopwatch app with modern design in mind. Using Neutralino JS. heavily in development, DO NOT USE IN PRODUCTION.
 
 ## Available for
 - Windows 
 
-**Note : You need to have WebView2 or Latest Microsoft Edge Installed for app to function correctly.**
-
-**Note: if you are getting a white screen after opening app, You should update Microsoft Edge or get WebView2 Engine [HERE](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section) manually**
+**Note : You need to have WebView2 or Latest Microsoft Edge Installed for app to function correctly. if you are getting a white screen after opening app, You should get WebView2 Engine [HERE](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section) manually**
 
 
 
-- Linux
+- Linux (NOT TESTED)
 
-- Mac
+- Mac (NOT TESTED)
 
 ## Note:
 Check Known Bugs before opening new ones, this project is in development.
-
+Timer can have ±1 second of error.
 ## Build
 ```bash
 npm i -g @neutralinojs/neu
-git clone https://github.com/meiaihara06/SimpleTime
+git clone https://github.com/navidmafi/SimpleTime
 cd SimpleTime
+neu update
 neu build -r
 ```
 
@@ -39,8 +38,8 @@ This project was for personal use and I made it public. it may be a part of a bi
 to [@SinisterStalker](https://github.com/sinisterstalker) and [@Al1382](https://github.com/Al1382) for Testing and ideas.
 
 ## License, Copyright and Attribution
-- Neutralinojs core: MIT. Copyright © 2021 Neutralinojs and contributors.
 - SimpleTime :  GNU GPLv3. Copyright © 2021 Navid Mafi Ranji and contributors.
+- Neutralinojs core: MIT. Copyright © 2021 Neutralinojs and contributors.
 - DSEG Font Family : OFL-1.1. Copyright © 2021 DSEG Font Family and contributors.
 - Sound Effect By [Zapsplat](https://www.zapsplat.com) , [License](https://www.zapsplat.com/license-type/standard-license/).
 - App Icon By [Freepik](https://www.freepik.com/) from [Flaticon](https://www.flaticon.com/free-icon/clock_2784399) , [License](https://media.flaticon.com/license/license.pdf).

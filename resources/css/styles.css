@@ -1,169 +1,166 @@
+/* Copyright (c) 2021 Navid Mafi <navidmafi2006@gmail.com>
+ Licensed under the GPLv3 Licence.
+See the LICENCE file in the repository root for full licence text.
+*/
 @font-face {
-    font-family: SvnSegit;
-    src: url(../fonts/DSEG7Classic-Italic.ttf);
-  }
-  @font-face {
-    font-family: SvnSeg;
-    src: url(../fonts/DSEG7Classic-Regular.ttf);
-  }
-  * {
-    margin: 0px;
-    padding: 0px;
-  }
-  :root {
-    --GBlack: #151515;
-    --GGray1: #202020;
-    --GGray2: #303030;
-    --GGray3: #675d75;
-    --GLight: #ffffff;
-    --GPrim: #c16ee7;
-  }
-  
-  body {
-    background-color: var(--GGray2);
-    color: var(--GLight);
-    font-family: "Poppins";
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
-  }
-  
-  .main {
-    display: grid;
-    align-items: center;
-    text-align: center;
-  
-    height: 100vh;
-  }
-  
-  .settings {
-    display: none;
-    align-items: center;
-    text-align: center;
-  
-    height: 100vh;
-  }
-  .settings h1 {
-    font-size: 6vw;
-  }
+  font-family: SvnSegit;
+  src: url(../fonts/DSEG7Classic-Italic.woff2);
+}
+@font-face {
+  font-family: SvnSeg;
+  src: url(../fonts/DSEG7Classic-Regular.woff2);
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  height: 100%;
+}
+:root {
+  --GBlack: #151515;
+  --GGray1: #202020;
+  --GGray2: #303030;
+  --GGray3: #675d75;
+  --GLight: #ffffff;
+  --GPrim: #c16ee7;
+}
 
+body {
+  background-color: var(--GGray2);
+  color: var(--GLight);
+  font-family: "Poppins";
+  user-select: none;
+  height: 100%;
+}
 
-  .settimer {
-    display: none;
-    align-items: center;
-    text-align: center;
-  
-    height: 100vh;
+.main {
+  display: grid;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.settings {
+  display: none;
+  align-items: center;
+  text-align: center;
+
+  height: 100vh;
+}
+.settings h1 {
+  font-size: 6vw;
+}
+
+.settimer {
+  display: none;
+  align-items: center;
+  text-align: center;
+
+  height: 100vh;
+}
+.settimer h1 {
+  font-size: 6vw;
+}
+
+.startsc {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--GGray2);
+}
+.updatetext {
+  background: linear-gradient(
+    to right,
+    #fff 20%,
+    var(--GPrim) 40%,
+    var(--GPrim) 60%,
+    #fff 80%
+  );
+  background-size: 200% auto;
+
+  color: #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shine 1s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
   }
-  .settimer h1 {
-    font-size: 6vw;
-  }
-  
-  .startsc {
-    position: absolute;
-    z-index: 5;
-    display: grid;
-    align-items: center;
-    text-align: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--GGray2);
-  }
-  .updatetext {
-    background: linear-gradient(
-      to right,
-      #fff 20%,
-      var(--GPrim) 40%,
-      var(--GPrim) 60%,
-      #fff 80%
-    );
-    background-size: 200% auto;
-  
-    color: #000;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  
-    animation: shine 1s linear infinite;
-  }
-  @keyframes shine {
-    to {
-      background-position: 200% center;
-    }
-  }
-  .btn2 {
-    background-color: var(--GBlack);
-    border: none;
-    color: var(--GPrim);
-    font-family: "Poppins";
-    font-weight: bold;
-    height: 35vh;
-    margin: 0px 0.5%;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px var(--GBlack);
-    font-size: 4vw;
-    transition: 100ms;
-    min-height: 6vw;
-  }
-  .btn2:hover {
-    background-color: var(--GGray3);
-    box-shadow: 0px 0px 10px var(--GGray3);
-  
-    color: var(--GLight);
-  }
-  
-  .btn2:disabled {
-    background-color: var(--GBlack);
-    color: var(--GGray1);
-    box-shadow: none;
-  }
-  .width20 {
-    width: 20%;
-  }
-  .width30 {
-    width: 30%;
-  }
-  .btns1 {
-    display: inline-block;
-  }
-  
-  #display {
-    padding-top: 10vh;
-    font-size: min(10vw, 15vw);
-    text-shadow: 0 0 5px var(--GPrim);
-    max-height: 100vw;
-    font-family: SvnSegit;
-    color: var(--GLight);
-  }
-  
-  .min {
-    position: absolute;
-    top: 10%;
-    left: 3%;
-    background-color: var(--GBlack);
-    border: none;
-    color: var(--GPrim);
-    border-radius: 50%;
-    padding: 5px;
-    width: 8vw;
-    height: 8vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 0px 8px var(--GBlack);
-    transition: 200ms;
-  }
-  .min:hover {
-    background-color: var(--GGray3);
-    box-shadow: 0px 0px 10px var(--GGray3);
-  
-    color: var(--GLight);
-  }
-  
+}
+.btn2 {
+  background-color: var(--GBlack);
+  border: none;
+  color: var(--GPrim);
+  font-family: "Poppins";
+  font-weight: bold;
+  margin: 0 0.5%;
+  border-radius: 5px;
+  box-shadow: 0 0 10px var(--GBlack);
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  transition: 100ms;
+
+}
+.btn2:hover {
+  background-color: var(--GGray3);
+  box-shadow: 0 0 10px var(--GGray3);
+
+  color: var(--GLight);
+}
+
+.btn2:disabled {
+  background-color: var(--GBlack);
+  color: var(--GGray1);
+  box-shadow: none;
+}
+.width20 {
+  width: 20%;
+}
+.width30 {
+  width: 30%;
+}
+.btns1 {
+  display: inline-block;
+}
+
+#display {
+  font-size: 40vh;
+  text-shadow: 0 0 5px var(--GPrim);
+  font-family: SvnSegit;
+  color: var(--GLight);
+}
+
+.min {
+  position: absolute;
+  top: 10%;
+  left: 3%;
+  background-color: var(--GBlack);
+  border: none;
+  color: var(--GPrim);
+  border-radius: 50%;
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 8px var(--GBlack);
+  transition: 200ms;
+}
+.min:hover {
+  background-color: var(--GGray3);
+  box-shadow: 0 0 10px var(--GGray3);
+
+  color: var(--GLight);
+}
 
 .form1 * {
   margin: 5px;
@@ -172,56 +169,3 @@
   text-align: center;
 }
 
-  .ocean {
-    overflow: hidden;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 100vh;
-    z-index: -2;
-    transition: 800ms;
-    opacity: 0;
-  }
-  .wave {
-    animation: wave 8s linear infinite;
-  }
-  
-  .wave1 {
-    animation: wave1 10s linear infinite;
-  }
-  
-  .wave2 {
-    animation: wave2 12s linear infinite;
-  }
-  
-  @keyframes wave {
-    0% {
-      transform: translateX(0%);
-    }
-  
-    100% {
-      transform: translateX(100%);
-    }
-  }
-  
-  @keyframes wave1 {
-    0% {
-      transform: scaleY(1.2) translateX(0%);
-    }
-  
-    100% {
-      transform: scaleY(1.2) translateX(100%);
-    }
-  }
-  
-  @keyframes wave2 {
-    0% {
-      transform: scaleY(0.8) translateX(0%);
-    }
-  
-    100% {
-      transform: scaleY(0.8) translateX(100%);
-    }
-  }
-  
