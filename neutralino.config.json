@@ -1,5 +1,5 @@
 {
-  "applicationId": "ir.NavidMafi.TimeTool",
+  "applicationId": "ir.NavidMafi.SimpleTime",
   "port": 0,
   "defaultMode": "window",
   "enableHTTPServer": true,
@@ -16,7 +16,7 @@
       "fullScreen": false,
       "alwaysOnTop": true,
       "icon": "/resources/icons/clock.png",
-      "enableInspector": false,
+      "enableInspector": true,
       "borderless": false,
       "maximize": false
     },
@@ -27,7 +27,7 @@
     "binaryName": "SimpleTime",
     "resourcesPath": "/resources/",
     "clientLibrary": "/resources/js/neutralino.js",
-    "binaryVersion": "2.5.0",
-    "clientVersion": "1.2.0"
+    "binaryVersion": "2.7.0",
+    "clientVersion": "1.4.0"
   }
 }

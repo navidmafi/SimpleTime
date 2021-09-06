@@ -20,11 +20,24 @@ let starttext = document.getElementById("starttext");
 let timerbtn = document.getElementById("timerbtn");
 let display = document.getElementById("display");
 let timerinputelmnt = document.getElementById("timermin");
+let root = document.documentElement;
 let timerval;
 let PREFDATA;
 let MODE;
 let runninstatus;
 let updateinterval;
+
+async function readdata() {
+  let response = await Neutralino.storage.getData({
+    bucket: "prefs",
+  });
+  return JSON.parse(response.data);
+}
+
+async function getprefs() {
+  PREFDATA = await readdata();
+  }
+
 async function updater() {
   runninstatus = "READY";
   MODE = "CHRONO";
@@ -35,10 +48,12 @@ async function updater() {
   if (PREFDATA.showms == false) {
     display.innerText = "0:00:00";
   }
+  console.log(PREFDATA.primcolor);
+  root.style.setProperty('--GPrim', PREFDATA.primcolor);
 
   PPbtn.addEventListener("click", togglerunnin);
   RstBtn.addEventListener("click", reset);
-  StpBtn.addEventListener("click", stop);
+  StpBtn.addEventListener("click", stoptimer);
   SttBtn.addEventListener("click", showsettings);
   timerbtn.addEventListener("click", settimer);
   document.addEventListener("keydown", function (event) {
@@ -54,16 +69,7 @@ async function updater() {
   }
 }
 
-async function readdata() {
-  let response = await Neutralino.storage.getData({
-    bucket: "prefs",
-  });
-  return JSON.parse(response.data);
-}
 
-async function getprefs() {
-  PREFDATA = await readdata();
-}
 
 async function firstdetected() {
   await Neutralino.filesystem.createDirectory({
@@ -71,7 +77,7 @@ async function firstdetected() {
   });
   await Neutralino.filesystem.writeFile({
     fileName: "./.storage/prefs.neustorage",
-    data: '{"showms":true}',
+    data: '{"showms":true,\n"primcolor":"#50c878"}',
   });
   printbig("GenConfig..", 500);
   setTimeout(() => {
@@ -251,7 +257,7 @@ function timeEnded() {
   document.getElementById("timeended").play();
 }
 
-function stop() {
+function stoptimer() {
   pause();
   RstBtn.style.transitionDuration = "300ms";
   RstBtn.style.width = "50%";
@@ -267,7 +273,8 @@ mstoggle.onclick = async function () {
     await Neutralino.storage.putData({
       bucket: "prefs",
       data: JSON.stringify({
-        showms: true
+        showms: true,
+        primcolor:PREFDATA.primcolor
       }),
     });
     printbig("Applying", 600);
@@ -280,7 +287,8 @@ mstoggle.onclick = async function () {
     await Neutralino.storage.putData({
       bucket: "prefs",
       data: JSON.stringify({
-        showms: false
+        showms: false,
+        primcolor:PREFDATA.primcolor
       }),
     });
     printbig("Applying", 600);

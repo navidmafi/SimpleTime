@@ -21,9 +21,7 @@ html {
   --GBlack: #151515;
   --GGray1: #202020;
   --GGray2: #303030;
-  --GGray3: #675d75;
   --GLight: #ffffff;
-  --GPrim: #c16ee7;
 }
 
 body {
@@ -50,6 +48,7 @@ body {
 }
 .settings h1 {
   font-size: 6vw;
+  color: var(--GPrim);
 }
 
 .settimer {
@@ -87,7 +86,7 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
+  font-size: 20vh;
   animation: shine 1s linear infinite;
 }
 @keyframes shine {
@@ -100,18 +99,18 @@ body {
   border: none;
   color: var(--GPrim);
   font-family: "Poppins";
-  font-weight: bold;
+  font-weight: normal;
   margin: 0 0.5%;
   border-radius: 5px;
   box-shadow: 0 0 10px var(--GBlack);
-  font-size: 1.1rem;
-  padding: 0.5rem 1rem;
+  font-size: 3vw;
+  padding: 6vh 3vw;
   transition: 100ms;
 
 }
 .btn2:hover {
-  background-color: var(--GGray3);
-  box-shadow: 0 0 10px var(--GGray3);
+  background-color: var(--GPrim);
+  box-shadow: 0 0 10px var(--GPrim);
 
   color: var(--GLight);
 }
@@ -132,8 +131,9 @@ body {
 }
 
 #display {
-  font-size: 40vh;
-  text-shadow: 0 0 5px var(--GPrim);
+  /* font-size: 10vw; */
+  font-size: min(30vh,12vw);
+  text-shadow: 0 0 10px var(--GPrim);
   font-family: SvnSegit;
   color: var(--GLight);
 }
@@ -156,8 +156,8 @@ body {
   transition: 200ms;
 }
 .min:hover {
-  background-color: var(--GGray3);
-  box-shadow: 0 0 10px var(--GGray3);
+  background-color: var(--GPrim);
+  box-shadow: 0 0 10px var(--GPrim);
 
   color: var(--GLight);
 }
