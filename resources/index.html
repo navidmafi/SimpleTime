@@ -23,7 +23,7 @@
       <h2 id="starttext" class="updatetext">statusmsg</h2>
     </div>
 
-    <div id="mainsc" class="section-grid-buttons">
+    <div id="MainScreen" class="section-grid-buttons">
       <span id="display">0:00:00:00</span>
       <div class="btns1">
         <button id="playpauseButton" class="btn2 width20">Start</button>
@@ -32,7 +32,7 @@
 
       </div>
 
-      <button id="OptionBtn" class="min min1">
+      <button id="OptionBtn" class="min min1" onclick="javascript:navigateToSection('SettingsScreen')">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="4vw"
@@ -49,7 +49,7 @@
       
     </div>
 
-    <div id="setsc" class="section-grid-buttons hidden">
+    <div id="SettingsScreen" class="section-grid-buttons hidden">
       <h1>Settings</h1>
       <div class="btns1">
         <button id="mstoggle" class="btn2 width30">Toggle ms</button>
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div id="timerscreen" class="section-grid-buttons hidden">
+    <div id="TimerScreen" class="section-grid-buttons hidden">
       
       <form class="form1" onsubmit="getformdata()" action="javascript:void(0);">
         <p>Enter Time in minutes</p>
@@ -71,7 +71,7 @@
      
     </div>
 
-    <div id="about" class="section-grid-buttons hidden">
+    <div id="AboutScreen" class="section-grid-buttons hidden">
       <h1>About & Info</h1>
       <div class="btns1">
         <button class="btn2 width30">Version Info</button>
@@ -81,12 +81,12 @@
       </div>
     </div>
 
-    <div id="credits" class="section-grid-buttons hidden">
+    <div id="CreditsScreen" class="section-grid-buttons hidden">
       <h1>About</h1>
       <p style="font-size: 2.5vw;">Developed by @NavidMafi , First started as a personal project, now it's available under GPLv3 License. Thanks to @SinisterStalker and @AL1382 for testing.</p>
     </div>
 
-    <div id="details" class="section-grid-buttons hidden">
+    <div id="DetailsScreen" class="section-grid-buttons hidden">
       <h1>Info & Details</h1>
       <p style="font-size: 3vw;" id="appDetails"></p>
     </div>
@@ -94,7 +94,7 @@
     <button
       id="backbtn"
       class="min min1 fixed hidden"
-      onclick="mainscreenshow()"
+      onclick='navigateToSection("MainScreen");'
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

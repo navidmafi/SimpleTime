@@ -2,6 +2,7 @@
  Licensed under the GPLv3 Licence.
 See the LICENCE file in the repository root for full licence text.
 */
+
 window.simpletime = {
 
   setTray: () => {  
@@ -42,20 +43,23 @@ let startTime;
 let elapsedTime = 0;
 let timerInterval;
 let zerocheckInterval;
-let PPbtn = document.getElementById("playpauseButton");
-let RstBtn = document.getElementById("resetButton");
-let StpBtn = document.getElementById("stopButton");
-let SttBtn = document.getElementById("OptionBtn");
-let backbtn = document.getElementById("backbtn");
-let mainscreen = document.getElementById("mainsc");
-let setscreen = document.getElementById("setsc");
-let timerscreen = document.getElementById("timerscreen");
-let mstoggle = document.getElementById("mstoggle");
-let starttext = document.getElementById("starttext");
-let timerbtn = document.getElementById("timerbtn");
-let display = document.getElementById("display");
-let timerinputelmnt = document.getElementById("timermin");
-let root = document.documentElement;
+const PlayPauseButton = document.getElementById("playpauseButton");
+const ResetButton = document.getElementById("resetButton");
+const StopButton = document.getElementById("stopButton");
+const OptionButton = document.getElementById("OptionBtn");
+const BackButton = document.getElementById("backbtn");
+const MainScreen = document.getElementById("MainScreen");
+const SettingsScreen = document.getElementById("SettingsScreen");
+const TimerScreen = document.getElementById("TimerScreen");
+const AboutScreen = document.getElementById("AboutScreen");
+const DetailsScreen = document.getElementById("DetailsScreen");
+const CreditsScreen = document.getElementById("CreditsScreen");
+const mstoggle = document.getElementById("mstoggle");
+const starttext = document.getElementById("starttext");
+const timerbtn = document.getElementById("timerbtn");
+const display = document.getElementById("display");
+const timerinputelmnt = document.getElementById("timermin");
+const root = document.documentElement;
 let timerval;
 let PREFDATA;
 let MODE;
@@ -95,16 +99,6 @@ async function updater() {
   console.log(PREFDATA.primcolor);
   root.style.setProperty('--GPrim', PREFDATA.primcolor);
 
-  PPbtn.addEventListener("click", togglerunnin);
-  RstBtn.addEventListener("click", reset);
-  StpBtn.addEventListener("click", stoptimer);
-  SttBtn.addEventListener("click", showsettings);
-  timerbtn.addEventListener("click", settimer);
-  document.addEventListener("keydown", function (event) {
-    if (event.code === "Space") {
-      togglerunnin();
-    }
-  });
   if (PREFDATA.showms == false) {
     updateinterval = 100;
   }
@@ -116,7 +110,7 @@ async function updater() {
 }
 
 async function firstdetected() {
-  mainscreen.classList.add("hidden");
+  MainScreen.classList.add("hidden");
   root.style.setProperty('--GPrim', "#50c878");
   
   document.getElementById("firstuse").classList.remove("hidden");
@@ -144,9 +138,23 @@ async function checkfirstrun() {
   }
 }
 
+function Hide(element){
+  element.classList.add("hidden");
+}
+function UnHide(element){
+  element.classList.remove("hidden");
+}
 
-
-
+function navigateToSection(sectionID) {
+  var bodychilds = document.querySelectorAll('body > *');
+  bodychilds.forEach(function(divs){
+Hide(divs);
+  }); 
+  UnHide(document.getElementById(sectionID));
+  if (sectionID == "MainScreen") {
+   UnHide(BackButton)
+  }
+}
 
 function timeToString(time) {
   let diffInHrs = time / 3600000;
@@ -192,7 +200,7 @@ function start() {
 
   }
 
-  PPbtn.innerText = "Pause";
+  PlayPauseButton.innerText = "Pause";
   zerocheckInterval = setInterval(function checkforzero() {
     if (timerval-1000 <= elapsedTime) {
       timeEnded();
@@ -210,7 +218,7 @@ function pause() {
   clearInterval(timerInterval);
   clearInterval(zerocheckInterval);
   if (runninstatus != "READY") {
-  PPbtn.innerText = "Resume";
+    PlayPauseButton.innerText = "Resume";
     
   }
 }
@@ -222,27 +230,12 @@ function c(d) {
 
 function showsettings() {
   pause();
-  mainscreen.classList.add("hidden");
-  backbtn.classList.remove("hidden");
-  setscreen.classList.remove("hidden");
+  MainScreen.classList.add("hidden");
+  BackButton.classList.remove("hidden");
+  SettingsScreen.classList.remove("hidden");
 
 }
 
-async function mainscreenshow() {
-  await getprefs();
-  setscreen.style.display = "none";
-  timerscreen.style.display = "none";
-  backbtn.style.display = "none";
-  mainscreen.style.display = "grid";
-  if (runninstatus == "timerpaused") {
-    print(timeToString(timerval-elapsedTime));
-    
-  }
-  if (runninstatus == "crn") {
-    print(timeToString(elapsedTime));
-  }
-
-}
 
 
 
@@ -256,18 +249,14 @@ function reset() {
   runninstatus = "off";
   setTimeout(() => {
     print(timeToString(elapsedTime));
-    RstBtn.removeAttribute("style");
-    PPbtn.removeAttribute("style");
-    PPbtn.innerText = "Start";
-    StpBtn.removeAttribute("style");
+    ResetButton.removeAttribute("style");
+    PlayPauseButton.removeAttribute("style");
+    PlayPauseButton.innerText = "Start";
+    StopButton.removeAttribute("style");
   }, 80);
 }
 
-function settimer() {
-  mainscreen.style.display = "none";
-  setscreen.style.display = "none";
-  timerscreen.style.display = "grid";
-}
+
 
 function togglerunnin() {
   if (
@@ -289,7 +278,7 @@ function getformdata() {
   runninstatus = "timerpaused";
   c(timerval);
   print(timeToString(timerval));
-  mainscreenshow();
+  navigateToSection("MainScreen");
   }, 100);
 }
 
@@ -304,10 +293,10 @@ function timeEnded() {
 
 function stoptimer() {
   pause();
-  RstBtn.style.transitionDuration = "300ms";
-  RstBtn.style.width = "50%";
-  PPbtn.style.display = "none";
-  StpBtn.style.display = "none";
+  ResetButton.style.transitionDuration = "300ms";
+  ResetButton.style.width = "50%";
+  PlayPauseButton.classList.add("hidden");
+  StopButton.style.classList.add("hidden");
 }
 
 
@@ -342,7 +331,9 @@ mstoggle.onclick = async function () {
     updateinterval = 1000;
 
     }, 500);
+
   }
+  await getprefs();
 };
 
 
