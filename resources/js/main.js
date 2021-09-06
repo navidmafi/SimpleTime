@@ -2,7 +2,42 @@
  Licensed under the GPLv3 Licence.
 See the LICENCE file in the repository root for full licence text.
 */
+window.simpletime = {
 
+  setTray: () => {  
+    let tray = {
+    icon: "/favicon.ico",
+    menuItems: [
+        {id: "SHOW", text: "Show"},
+        {id: "SEP", text: "-"},
+        {id: "QUIT", text: "Exit"}
+    ]
+    };
+    Neutralino.os.setTray(tray);
+  },
+  onTrayMenuItemClicked: (event) => {
+    switch(event.detail.id) {
+        case "SHOW":
+            Neutralino.os.showMessageBox({
+                type: "INFO",
+                title: "Version information",
+                content: `Neutralinojs server: v${NL_VERSION} | Neutralinojs client: v${NL_CVERSION}` 
+            });
+            break;
+        case "QUIT":
+            Neutralino.app.exit();
+            break;
+    }
+},
+openGitHub: () => {
+  Neutralino.app.open({
+      url: "https://github.com/navidmafi/SimpleTime"
+  });
+},
+  onWindowClose: () => {
+    Neutralino.app.exit();
+  }
+}
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
@@ -42,6 +77,7 @@ async function updater() {
   runninstatus = "READY";
   MODE = "CHRONO";
   document.addEventListener("contextmenu", (event) => event.preventDefault());
+  
   printbig("Starting...", 1000);
   await checkfirstrun();
   await getprefs();
@@ -67,6 +103,8 @@ async function updater() {
   if (PREFDATA.showms == true) {
     updateinterval = 10;
   }
+  document.getElementById("appDetails").innerText=`Neutralinojs server: v${NL_VERSION} \n Neutralinojs client: v${NL_CVERSION} \n App Version : 0.4 Pre-release`;
+
 }
 
 
@@ -172,9 +210,9 @@ function c(d) {
 
 function showsettings() {
   pause();
-  mainscreen.style.display = "none";
-  backbtn.removeAttribute("style");
-  setscreen.style.display = "grid";
+  // mainscreen.style.display = "none";
+  // backbtn.removeAttribute("style");
+  // setscreen.style.display = "grid";
 }
 
 async function mainscreenshow() {
@@ -249,7 +287,7 @@ function getformdata() {
 }
 
 function timeEnded() {
-  stop();
+  stoptimer();
   document.getElementById("timeended").loop = true;
   display.style.color = "#fc2149";
   display.innerText = "END";
@@ -299,3 +337,9 @@ mstoggle.onclick = async function () {
     }, 500);
   }
 };
+
+
+Neutralino.events.on("trayMenuItemClicked", simpletime.onTrayMenuItemClicked);
+Neutralino.events.on("windowClose", simpletime.onWindowClose);
+Neutralino.init();
+window.simpletime.setTray();

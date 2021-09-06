@@ -18,7 +18,7 @@
       <h2 id="starttext" class="updatetext">statusmsg</h2>
     </div>
 
-    <div id="mainsc" class="main">
+    <div id="mainsc" class="section-grid-buttons">
       <span id="display">0:00:00:00</span>
       <div class="btns1">
         <button id="playpauseButton" class="btn2 width20">Start</button>
@@ -27,7 +27,7 @@
 
       </div>
 
-      <button id="OptionBtn" class="min">
+      <button id="OptionBtn" class="min min1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="4vw"
@@ -44,7 +44,7 @@
       
     </div>
 
-    <div id="setsc" class="settings">
+    <div id="setsc" class="section-grid-buttons">
       <h1>Settings</h1>
       <div class="btns1">
         <button id="mstoggle" class="btn2 width30">Toggle ms</button>
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div id="timerscreen" class="settimer">
+    <div id="timerscreen" class="section-grid-buttons">
       
       <form class="form1" onsubmit="getformdata()" action="javascript:void(0);">
         <p>Enter Time in minutes</p>
@@ -65,9 +65,29 @@
      
     </div>
 
+    <div id="about" class="section-grid-buttons">
+      <h1>About & Help</h1>
+      <div class="btns1">
+        <button class="btn2 width30">Version Info</button>
+        <button class="btn2 width30" onclick="window.simpletime.openGitHub();">GitHub</button>
+        <button class="btn2 width30">About</button>
+
+      </div>
+    </div>
+
+    <div id="credits" class="section-grid-buttons">
+      <h1>About</h1>
+      <p style="font-size: 2.5vw;">Developed by @NavidMafi , First started as a personal project, now it's available under GPLv3 License. Thanks to @SinisterStalker and @AL1382 for testing.</p>
+    </div>
+
+    <div id="details" class="section-grid-buttons">
+      <h1>Info & Details</h1>
+      <p style="font-size: 3vw;" id="appDetails"></p>
+    </div>
+
     <button
       id="backbtn"
-      class="min"
+      class="min min1"
       onclick="mainscreenshow()"
       style="display: none"
     >
@@ -85,9 +105,9 @@
         />
       </svg>
     </button>
-
-    <script src="./js/main.js"></script>
-    <script src="./js/neutralino.js"></script>
+    
+    <script src="js/neutralino.js"></script>
+    <script src="js/main.js"></script>
 
 
 <audio id="timeended">
