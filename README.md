@@ -3,7 +3,7 @@
 A simple cross-platform timer and stopwatch app with modern design in mind. Using [Neutralino JS](https://neutralino.js.org). Bugs are expected, May not be used in production.
 
 ## Available for
-- Windows 
+- Windows : First download Microsoft Edge [WebView2](https://go.microsoft.com/fwlink/p/?LinkId=2124703)
 
 - Linux (NOT TESTED)
 

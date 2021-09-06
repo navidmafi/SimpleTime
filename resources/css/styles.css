@@ -30,6 +30,7 @@ html {
 }
 
 body {
+  
   background-color: var(--GGray2);
   color: var(--GLight);
   font-family: "Poppins";
@@ -37,8 +38,7 @@ body {
   height: 100%;
 }
 
-
-.startsc {
+.bigprint {
   position: absolute;
   z-index: 5;
   display: grid;
@@ -46,7 +46,13 @@ body {
   text-align: center;
   width: 100vw;
   height: 100vh;
-  background-color: var(--GGray2);
+ background-color: var(--GGray1);
+}
+.wavebg {
+background-image: url(../img/lw2.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: center;
 }
 .updatetext {
   background: linear-gradient(
@@ -57,7 +63,6 @@ body {
     #fff 80%
   );
   background-size: 200% auto;
-
   color: #000;
   background-clip: text;
   -webkit-background-clip: text;
@@ -81,13 +86,12 @@ body {
   box-shadow: 0 0 10px var(--GBlack);
   font-size: 3vw;
   padding: 6vh 3vw;
-  transition: 100ms;
-
+  transition: 150ms;
 }
+
 .btn2:hover {
   background-color: var(--GPrim);
   box-shadow: 0 0 10px var(--GPrim);
-
   color: var(--GLight);
 }
 
@@ -108,7 +112,7 @@ body {
 
 #display {
   /* font-size: 10vw; */
-  font-size: min(30vh,12vw);
+  font-size: min(30vh, 12vw);
   text-shadow: 0 0 10px var(--GPrim);
   font-family: SvnSegit;
   color: var(--GLight);
@@ -151,7 +155,6 @@ body {
   text-align: center;
 }
 
-
 .section-grid-buttons {
   display: grid;
   align-items: center;
@@ -164,7 +167,7 @@ body {
   font-weight: 400;
 }
 
-
 .hidden {
   display: none;
 }
+

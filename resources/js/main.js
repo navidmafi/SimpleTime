@@ -73,6 +73,14 @@ async function getprefs() {
   PREFDATA = await readdata();
   }
 
+  function printbig(text, time) {
+    document.getElementById("bigprint").classList.remove("hidden");
+    document.getElementById("starttext").innerHTML = text;
+    setTimeout(() => {
+      document.getElementById("bigprint").classList.add("hidden");
+    }, time);
+  }
+
 async function updater() {
   runninstatus = "READY";
   MODE = "CHRONO";
@@ -107,9 +115,12 @@ async function updater() {
 
 }
 
-
-
 async function firstdetected() {
+  mainscreen.classList.add("hidden");
+  root.style.setProperty('--GPrim', "#50c878");
+  
+  document.getElementById("firstuse").classList.remove("hidden");
+
   await Neutralino.filesystem.createDirectory({
     path: "./.storage",
   });
@@ -117,10 +128,7 @@ async function firstdetected() {
     fileName: "./.storage/prefs.neustorage",
     data: '{"showms":true,\n"primcolor":"#50c878"}',
   });
-  printbig("GenConfig..", 500);
-  setTimeout(() => {
-    window.location.reload();
-  }, 500);
+  
 }
 
 async function checkfirstrun() {
@@ -135,6 +143,10 @@ async function checkfirstrun() {
   
   }
 }
+
+
+
+
 
 function timeToString(time) {
   let diffInHrs = time / 3600000;
@@ -232,13 +244,7 @@ async function mainscreenshow() {
 
 }
 
-function printbig(text, time) {
-  document.getElementById("bigprint").removeAttribute("style");
-  document.getElementById("starttext").innerHTML = text;
-  setTimeout(() => {
-    document.getElementById("bigprint").style.display = "none";
-  }, time);
-}
+
 
 function reset() {
   clearInterval(timerInterval);
