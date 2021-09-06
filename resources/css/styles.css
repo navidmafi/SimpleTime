@@ -7,6 +7,10 @@ See the LICENCE file in the repository root for full licence text.
   src: url(../fonts/DSEG7Classic-Italic.woff2);
 }
 @font-face {
+  font-family: Poppins;
+  src: url(../fonts/Poppins-Regular.ttf);
+}
+@font-face {
   font-family: SvnSeg;
   src: url(../fonts/DSEG7Classic-Regular.woff2);
 }
@@ -32,8 +36,6 @@ body {
   user-select: none;
   height: 100%;
 }
-
-
 
 
 .startsc {
@@ -137,13 +139,9 @@ body {
   top: 10%;
   left: 3%;
 }
-.min2 {
-  top: 10%;
-  left: 3%;
-}
-.min3 {
-  top: 10%;
-  left: 3%;
+
+.fixed {
+  position: fixed;
 }
 
 .form1 * {
@@ -164,4 +162,9 @@ body {
   font-size: 5vw;
   color: var(--GPrim);
   font-weight: 400;
+}
+
+
+.hidden {
+  display: none;
 }

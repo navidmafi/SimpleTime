@@ -210,9 +210,10 @@ function c(d) {
 
 function showsettings() {
   pause();
-  // mainscreen.style.display = "none";
-  // backbtn.removeAttribute("style");
-  // setscreen.style.display = "grid";
+  mainscreen.classList.add("hidden");
+  backbtn.classList.remove("hidden");
+  setscreen.classList.remove("hidden");
+
 }
 
 async function mainscreenshow() {

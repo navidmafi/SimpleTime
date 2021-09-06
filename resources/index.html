@@ -3,14 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="Cache-control" content="no-cache" />
-    <title>StopWatch - Chrono</title>
+    <title>SimpleTime</title>
     <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body onload="updater()" oncontextmenu="return false;">
 
@@ -44,15 +38,16 @@
       
     </div>
 
-    <div id="setsc" class="section-grid-buttons">
+    <div id="setsc" class="section-grid-buttons hidden">
       <h1>Settings</h1>
       <div class="btns1">
         <button id="mstoggle" class="btn2 width30">Toggle ms</button>
         <button id="timerbtn" class="btn2 width30">Timer</button>
+        <button id="timerbtn" class="btn2 width30">More & Info</button>
       </div>
     </div>
 
-    <div id="timerscreen" class="section-grid-buttons">
+    <div id="timerscreen" class="section-grid-buttons hidden">
       
       <form class="form1" onsubmit="getformdata()" action="javascript:void(0);">
         <p>Enter Time in minutes</p>
@@ -65,8 +60,8 @@
      
     </div>
 
-    <div id="about" class="section-grid-buttons">
-      <h1>About & Help</h1>
+    <div id="about" class="section-grid-buttons hidden">
+      <h1>About & Info</h1>
       <div class="btns1">
         <button class="btn2 width30">Version Info</button>
         <button class="btn2 width30" onclick="window.simpletime.openGitHub();">GitHub</button>
@@ -75,21 +70,20 @@
       </div>
     </div>
 
-    <div id="credits" class="section-grid-buttons">
+    <div id="credits" class="section-grid-buttons hidden">
       <h1>About</h1>
       <p style="font-size: 2.5vw;">Developed by @NavidMafi , First started as a personal project, now it's available under GPLv3 License. Thanks to @SinisterStalker and @AL1382 for testing.</p>
     </div>
 
-    <div id="details" class="section-grid-buttons">
+    <div id="details" class="section-grid-buttons hidden">
       <h1>Info & Details</h1>
       <p style="font-size: 3vw;" id="appDetails"></p>
     </div>
 
     <button
       id="backbtn"
-      class="min min1"
+      class="min min1 fixed hidden"
       onclick="mainscreenshow()"
-      style="display: none"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
