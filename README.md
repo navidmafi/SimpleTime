@@ -1,5 +1,4 @@
 ## SimpleTime
-**Mainstream support for this project ended on 6 July 2021. I don't have any plans to continue to work on this. only bug fixes and performance changes until end of life. However SimpleTime has been and always will be open to contributions!**
 
 A simple cross-platform timer and stopwatch app with modern design in mind. Using Neutralino JS. Bugs are expected, May not be used in production.
 
@@ -32,7 +31,7 @@ This project was for personal use and I made it public. it may be a part of a bi
 
 
 ## Thanks
-to [@SinisterStalker](https://github.com/sinisterstalker) and [@Al1382](https://github.com/Al1382) for Testing and ideas and to [Neutralino JS Team](https://github.com/neutralinojs/neutralinojs) for this amazing library.
+to [@SinisterStalker](https://github.com/sinisterstalker) and [@AL1382](https://github.com/Al1382) for Testing and to [Neutralino JS Team](https://github.com/neutralinojs/neutralinojs) for this amazing framework.
 
 ## License, Copyright and Attribution
 - SimpleTime :  GNU GPLv3. Copyright © 2021 Navid Mafi Ranji and contributors.
