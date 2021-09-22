@@ -4,41 +4,40 @@ See the LICENCE file in the repository root for full licence text.
 */
 
 window.simpletime = {
-
-  setTray: () => {  
+  setTray: () => {
     let tray = {
-    icon: "/favicon.ico",
-    menuItems: [
-        {id: "SHOW", text: "Show"},
-        {id: "SEP", text: "-"},
-        {id: "QUIT", text: "Exit"}
-    ]
+      icon: "/favicon.ico",
+      menuItems: [
+        { id: "SHOW", text: "Show" },
+        { id: "SEP", text: "-" },
+        { id: "QUIT", text: "Exit" },
+      ],
     };
     Neutralino.os.setTray(tray);
   },
   onTrayMenuItemClicked: (event) => {
-    switch(event.detail.id) {
-        case "SHOW":
-            Neutralino.os.showMessageBox({
-                type: "INFO",
-                title: "Version information",
-                content: `Neutralinojs server: v${NL_VERSION} | Neutralinojs client: v${NL_CVERSION}` 
-            });
-            break;
-        case "QUIT":
-            Neutralino.app.exit();
-            break;
+    switch (event.detail.id) {
+      case "SHOW":
+        Neutralino.os.showMessageBox({
+          type: "INFO",
+          title: "Version information",
+          content: `Neutralinojs server: v${NL_VERSION} | Neutralinojs client: v${NL_CVERSION}`,
+        });
+        break;
+      case "QUIT":
+        Neutralino.app.exit();
+        break;
     }
-},
-openGitHub: () => {
-  Neutralino.app.open({
-      url: "https://github.com/navidmafi/SimpleTime"
-  });
-},
+  },
+  openGitHub: () => {
+    Neutralino.app.open({
+      url: "https://github.com/navidmafi/SimpleTime",
+    });
+  },
   onWindowClose: () => {
     Neutralino.app.exit();
-  }
-}
+  },
+};
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
@@ -59,6 +58,7 @@ const starttext = document.getElementById("starttext");
 const timerbtn = document.getElementById("timerbtn");
 const display = document.getElementById("display");
 const timerinputelmnt = document.getElementById("timermin");
+const notif = document.getElementById("notif");
 const root = document.documentElement;
 let timerval;
 let PREFDATA;
@@ -66,93 +66,86 @@ let MODE;
 let runninstatus;
 let updateinterval;
 
-async function readdata() {
-  let response = await Neutralino.storage.getData({
-    bucket: "prefs",
-  });
-  return JSON.parse(response.data);
+async function loadData() {
+  try {
+    let response = await Neutralino.storage.getData({
+      bucket: "prefs",
+    });
+    PREFDATA = JSON.parse(response.data);
+  }
+  catch {
+    console.log("catched");
+    MainScreen.classList.add("hidden");
+    root.style.setProperty("--GPrim", "#50c878");
+    document.getElementById("firstuse").classList.remove("hidden");
+    await Neutralino.filesystem.createDirectory({
+      path: "./.storage",
+    });
+    await Neutralino.filesystem.writeFile({
+      fileName: "./.storage/prefs.neustorage",
+      data: '{"showms":true,\n"primcolor":"#50c878"}',
+    });
+  }
+  
 }
 
-async function getprefs() {
-  PREFDATA = await readdata();
+function setConfig(){
+  if (!PREFDATA.showms) {
+    print("0:00:00");
   }
+  root.style.setProperty("--GPrim", PREFDATA.primcolor);
 
-  function printbig(text, time) {
-    document.getElementById("bigprint").classList.remove("hidden");
-    document.getElementById("starttext").innerHTML = text;
-    setTimeout(() => {
-      document.getElementById("bigprint").classList.add("hidden");
-    }, time);
+  if (!PREFDATA.showms) {
+    updateinterval = 100;
   }
+  if (PREFDATA.showms) {
+    updateinterval = 10;
+  }
+  document.getElementById(
+    "appDetails"
+  ).innerText = `Neutralinojs server: v${NL_VERSION} \n Neutralinojs client: v${NL_CVERSION} \n App Version : 0.4 Pre-release`;
+}
+
+function printbig(text, time) {
+  document.getElementById("bigprint").classList.remove("hidden");
+  document.getElementById("starttext").innerHTML = text;
+  setTimeout(() => {
+    document.getElementById("bigprint").classList.add("hidden");
+  }, time);
+}
 
 async function updater() {
   runninstatus = "READY";
   MODE = "CHRONO";
   document.addEventListener("contextmenu", (event) => event.preventDefault());
-  
   printbig("Starting...", 1000);
-  await checkfirstrun();
-  await getprefs();
-  if (PREFDATA.showms == false) {
-    display.innerText = "0:00:00";
-  }
-  console.log(PREFDATA.primcolor);
-  root.style.setProperty('--GPrim', PREFDATA.primcolor);
-
-  if (PREFDATA.showms == false) {
-    updateinterval = 100;
-  }
-  if (PREFDATA.showms == true) {
-    updateinterval = 10;
-  }
-  document.getElementById("appDetails").innerText=`Neutralinojs server: v${NL_VERSION} \n Neutralinojs client: v${NL_CVERSION} \n App Version : 0.4 Pre-release`;
-
-}
-
-async function firstdetected() {
-  MainScreen.classList.add("hidden");
-  root.style.setProperty('--GPrim', "#50c878");
-  
-  document.getElementById("firstuse").classList.remove("hidden");
-
-  await Neutralino.filesystem.createDirectory({
-    path: "./.storage",
-  });
-  await Neutralino.filesystem.writeFile({
-    fileName: "./.storage/prefs.neustorage",
-    data: '{"showms":true,\n"primcolor":"#50c878"}',
-  });
+  await loadData();
+  setConfig();
   
 }
 
-async function checkfirstrun() {
-  try {
-    let response = await Neutralino.filesystem.readFile({
-      fileName: "./.storage/prefs.neustorage",
-    });
-    var res = response.data;
-  } catch (error) {
 
-      firstdetected();
-  
-  }
-}
 
-function Hide(element){
+
+
+function Hide(element) {
   element.classList.add("hidden");
 }
-function UnHide(element){
+function UnHide(element) {
   element.classList.remove("hidden");
 }
 
 function navigateToSection(sectionID) {
-  var bodychilds = document.querySelectorAll('body > *');
-  bodychilds.forEach(function(divs){
-Hide(divs);
-  }); 
+  var bodychilds = document.querySelectorAll("body > div");
+  bodychilds.forEach(function (divs) {
+    Hide(divs);
+  });
   UnHide(document.getElementById(sectionID));
+  if (sectionID != "MainScreen") {
+    UnHide(BackButton);
+  }
   if (sectionID == "MainScreen") {
-   UnHide(BackButton)
+    Hide(BackButton);
   }
 }
 
@@ -175,11 +168,27 @@ function timeToString(time) {
   }
   if (PREFDATA.showms == false) {
     return `${formattedHH}:${formattedMM}:${formattedSS}`;
-  } 
+  }
 }
 
 function print(txt) {
   display.innerHTML = txt;
+}
+
+async function SendNotif(text){
+   UnHide(notif);
+  notif.querySelector("p").innerText=text;
+  setTimeout(() => {
+    notif.classList.toggle('hiddennotif');
+  }, 100);
+  setTimeout(() => {
+    notif.classList.toggle('hiddennotif');
+
+  }, 2100);
+  setTimeout(() => {
+  Hide(notif);
+  }, 2650);
+
 }
 
 function start() {
@@ -187,22 +196,20 @@ function start() {
   if (runninstatus == "timerpaused") {
     timerInterval = setInterval(function printTime() {
       elapsedTime = Date.now() - startTime;
-      print(timeToString(timerval-elapsedTime));
+      print(timeToString(timerval - elapsedTime));
     }, updateinterval);
     runninstatus = "timerrunning";
-  }
-  else {
+  } else {
     timerInterval = setInterval(function printTime() {
       elapsedTime = Date.now() - startTime;
       print(timeToString(elapsedTime));
     }, updateinterval);
     runninstatus = "crn";
-
   }
 
   PlayPauseButton.innerText = "Pause";
   zerocheckInterval = setInterval(function checkforzero() {
-    if (timerval-1000 <= elapsedTime) {
+    if (timerval - 1000 <= elapsedTime) {
       timeEnded();
     }
   }, 1000);
@@ -219,25 +226,16 @@ function pause() {
   clearInterval(zerocheckInterval);
   if (runninstatus != "READY") {
     PlayPauseButton.innerText = "Resume";
-    
   }
 }
 
-function c(d) {
-  console.log(d);
-  //dEbUG XD
-}
 
 function showsettings() {
   pause();
   MainScreen.classList.add("hidden");
   BackButton.classList.remove("hidden");
   SettingsScreen.classList.remove("hidden");
-
 }
-
-
-
 
 function reset() {
   clearInterval(timerInterval);
@@ -247,16 +245,12 @@ function reset() {
   display.removeAttribute("style");
   elapsedTime = 0;
   runninstatus = "off";
-  setTimeout(() => {
     print(timeToString(elapsedTime));
     ResetButton.removeAttribute("style");
-    PlayPauseButton.removeAttribute("style");
     PlayPauseButton.innerText = "Start";
-    StopButton.removeAttribute("style");
-  }, 80);
+    UnHide(PlayPauseButton);
+    UnHide(StopButton);
 }
-
-
 
 function togglerunnin() {
   if (
@@ -275,10 +269,9 @@ function getformdata() {
   reset();
   setTimeout(() => {
     timerval = timerinputelmnt.value * 1000 * 60;
-  runninstatus = "timerpaused";
-  c(timerval);
-  print(timeToString(timerval));
-  navigateToSection("MainScreen");
+    runninstatus = "timerpaused";
+    print(timeToString(timerval));
+    navigateToSection("MainScreen");
   }, 100);
 }
 
@@ -295,47 +288,49 @@ function stoptimer() {
   pause();
   ResetButton.style.transitionDuration = "300ms";
   ResetButton.style.width = "50%";
-  PlayPauseButton.classList.add("hidden");
-  StopButton.style.classList.add("hidden");
+  Hide(PlayPauseButton);
+  Hide(StopButton);
 }
 
-
-
 mstoggle.onclick = async function () {
-  await getprefs();
+  await loadData();
   if (PREFDATA.showms == false) {
     await Neutralino.storage.putData({
       bucket: "prefs",
       data: JSON.stringify({
         showms: true,
-        primcolor:PREFDATA.primcolor
+        primcolor: PREFDATA.primcolor,
       }),
     });
-    printbig("Applying", 600);
-    setTimeout(() => {
-      getprefs();
-    updateinterval = 10;
-    }, 500);
+    SendNotif("Applied");
   }
-  if (PREFDATA.showms == true) {
+  else if (PREFDATA.showms == true) {
     await Neutralino.storage.putData({
       bucket: "prefs",
       data: JSON.stringify({
         showms: false,
-        primcolor:PREFDATA.primcolor
+        primcolor: PREFDATA.primcolor,
       }),
     });
-    printbig("Applying", 600);
-    setTimeout(() => {
-      getprefs();
-    updateinterval = 1000;
-
-    }, 500);
+    SendNotif("Applied");
+  
 
   }
-  await getprefs();
+  await loadData();
+  if (PREFDATA.showms == true) {
+    updateinterval = 10;
+  }
+  else if (PREFDATA.showms == false) {
+    updateinterval = 1000;
+  }
+  if (runninstatus == "timerpaused") {
+      elapsedTime = Date.now() - startTime;
+      print(timeToString(timerval - elapsedTime));
+  } else {
+      elapsedTime = Date.now() - startTime;
+      print(timeToString(elapsedTime));
+  }
 };
-
 
 Neutralino.events.on("trayMenuItemClicked", simpletime.onTrayMenuItemClicked);
 Neutralino.events.on("windowClose", simpletime.onWindowClose);

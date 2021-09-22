@@ -30,7 +30,6 @@ html {
 }
 
 body {
-  
   background-color: var(--GGray2);
   color: var(--GLight);
   font-family: "Poppins";
@@ -46,10 +45,10 @@ body {
   text-align: center;
   width: 100vw;
   height: 100vh;
- background-color: var(--GGray1);
+  background-color: var(--GGray1);
 }
 .wavebg {
-background-image: url(../img/lw2.svg);
+  background-image: url(../img/lw2.svg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
@@ -83,7 +82,7 @@ background-image: url(../img/lw2.svg);
   font-weight: normal;
   margin: 0 0.5%;
   border-radius: 5px;
-  box-shadow: 0 0 10px var(--GBlack);
+  box-shadow: 0 0 15px var(--GBlack);
   font-size: 3vw;
   padding: 6vh 3vw;
   transition: 150ms;
@@ -91,7 +90,7 @@ background-image: url(../img/lw2.svg);
 
 .btn2:hover {
   background-color: var(--GPrim);
-  box-shadow: 0 0 10px var(--GPrim);
+  box-shadow: 0 0 15px var(--GPrim);
   color: var(--GLight);
 }
 
@@ -171,3 +170,29 @@ background-image: url(../img/lw2.svg);
   display: none;
 }
 
+.notif {
+  position: fixed;
+  
+  background-color: var(--GPrim);
+  /* background-color: transparent; 
+  /* backdrop-filter: blur(5px);  I NEED BLUUUUUURRRRRRR */
+  padding: 3vh 7vw;
+  text-align: center;
+   box-shadow: 0 0 15px var(--GPrim); 
+top:5%;
+  right: 50%;
+transform: translateX(50%);
+/* border: #fff 1px solid; */
+border-radius: 5px;
+z-index: 6;
+opacity: 1;
+  transition: opacity 0.5s;
+}
+.notif svg,p {
+vertical-align: middle;
+  
+  display: inline-block;
+}
+.notif.hiddennotif{
+  opacity: 0;
+}

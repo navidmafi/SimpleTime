@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body onload="updater()" oncontextmenu="return false;">
-    
+    <notif class="notif hiddennotif hidden" id="notif">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      </svg>
+      <p>Notif.text</p></notif>
     <div id="firstuse" class="bigprint wavebg hidden">
       <h2 class="updatetext" style="font-size: 6vw;">Welcome to SimpleTime</h2>
-      <p style="font-size: 2.5vw; width: 80%; margin: 0 auto;">Default config generated in .storage directory. You may want to edit it. also you may want to <span style="text-decoration: underline; color: var(--GPrim);" onclick="window.simpletime.openGitHub();">Contribute</span> to this project</p>
+      <p style="font-size: 2.5vw; width: 80%; margin: 0 auto;">Default config generated in .storage directory. You may want to edit it. also you may want to <span style="text-decoration: underline; color: var(--GPrim);" onclick="javascript:window.simpletime.openGitHub();">Contribute</span> to this project</p>
       <div class="btns1">
-      <button class="btn2 width20" onclick="window.location.reload();">Continue</button>
+      <button class="btn2 width20" onclick="javascript:window.location.reload();">Continue</button>
   
       </div>
 
@@ -26,9 +30,9 @@
     <div id="MainScreen" class="section-grid-buttons">
       <span id="display">0:00:00:00</span>
       <div class="btns1">
-        <button id="playpauseButton" class="btn2 width20">Start</button>
-        <button id="stopButton" class="btn2 width20">Stop</button>
-        <button id="resetButton" class="btn2 width20">Reset</button>
+        <button id="playpauseButton" class="btn2 width20" onclick="javascript:togglerunnin()">Start</button>
+        <button id="stopButton" class="btn2 width20" onclick="javascript:stoptimer()">Stop</button>
+        <button id="resetButton" class="btn2 width20" onclick="javascript:reset()">Reset</button>
 
       </div>
 
@@ -53,8 +57,8 @@
       <h1>Settings</h1>
       <div class="btns1">
         <button id="mstoggle" class="btn2 width30">Toggle ms</button>
-        <button id="timerbtn" class="btn2 width30">Timer</button>
-        <button id="timerbtn" class="btn2 width30">More & Info</button>
+        <button id="timerbtn" class="btn2 width30" onclick="javascript:navigateToSection('TimerScreen')">Timer</button>
+        <button id="timerbtn" class="btn2 width30" onclick="javascript:navigateToSection('AboutScreen')" >More & Info</button>
       </div>
     </div>
 
@@ -63,7 +67,7 @@
       <form class="form1" onsubmit="getformdata()" action="javascript:void(0);">
         <p>Enter Time in minutes</p>
         <div class="btns1">
-          <input type="text" id="timermin" placeholder="here" class="btn2 width30">
+          <input type="text" id="timermin" placeholder="here" class="btn2 width30" autocomplete="off">
           <button type="submit" class="btn2 width30">Set</button>
         </div>
        
@@ -74,16 +78,16 @@
     <div id="AboutScreen" class="section-grid-buttons hidden">
       <h1>About & Info</h1>
       <div class="btns1">
-        <button class="btn2 width30">Version Info</button>
-        <button class="btn2 width30" onclick="window.simpletime.openGitHub();">GitHub</button>
-        <button class="btn2 width30">About</button>
+        <button class="btn2 width30" onclick="javascript:navigateToSection('DetailsScreen')">Version Info</button>
+        <button class="btn2 width30" onclick="javascript:window.simpletime.openGitHub();">GitHub</button>
+        <button class="btn2 width30" onclick="javascript:navigateToSection('CreditsScreen')">About</button>
 
       </div>
     </div>
 
     <div id="CreditsScreen" class="section-grid-buttons hidden">
       <h1>About</h1>
-      <p style="font-size: 2.5vw;">Developed by @NavidMafi , First started as a personal project, now it's available under GPLv3 License. Thanks to @SinisterStalker and @AL1382 for testing.</p>
+      <p style="font-size: 2.5vw; width: 80%; margin: 0 auto;">Developed by @NavidMafi , First started as a personal project, now it's available under GPLv3 License. Thanks to @SinisterStalker and @AL1382 for testing.</p>
     </div>
 
     <div id="DetailsScreen" class="section-grid-buttons hidden">
@@ -94,7 +98,7 @@
     <button
       id="backbtn"
       class="min min1 fixed hidden"
-      onclick='navigateToSection("MainScreen");'
+      onclick='javascipt:navigateToSection("MainScreen");'
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
