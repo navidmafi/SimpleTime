@@ -1,5 +1,8 @@
 ## SimpleTime
+# DEPRECATED. Also this code it literal crap please do not judge me based on it lol
+
 ![bn1](https://user-images.githubusercontent.com/46371349/134331498-d6ebbce8-a5f6-45e4-be47-faf562de1d80.png)
+
 
 A simple cross-platform timer and stopwatch app with modern design in mind. Using [Neutralino JS](https://neutralino.js.org). Bugs are expected, May not be used in production.
 
